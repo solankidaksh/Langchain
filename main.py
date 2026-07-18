@@ -5,25 +5,18 @@ from langchain_tavily import TavilySearch
 from langchain.agents import create_agent
 from langchain.tools import tool
 from langchain_core.messages import HumanMessage
+from langchain_tavily import TavilySearch
 load_dotenv()
 
-@tool
-def search(query: str) ->str:
-    """
-    Search for current information and return a complete answer.
-    The returned string is the final answer — no further searching is needed.
-    """
-    print(f"Search for {query}")
-    return " Tokoyo weather is sunny..."
+tavily = TavilySearch(max_results = 2)
 
 llm = ChatGroq(temperature = 0, model = "openai/gpt-oss-20b")
-tools = [search]
-agent = create_agent(llm, tools = tools)
-    
+tools = [tavily]
+agent = create_agent(llm, tools = tools)   
 
 def main():
     print("Hello from langchain-course!")
-    result = agent.invoke({"messages":[HumanMessage(content = "What is the weather in Tokoyo?")]})
+    result = agent.invoke({"messages":[HumanMessage(content = "search for 3 job postings fro ai engineer using langchain in the bay area and list their details. Only search twice.")]})
     print(result)
     # print(os.environ.get("OPENAI_API_KEY"))
 #     information = """
