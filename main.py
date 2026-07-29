@@ -1,23 +1,44 @@
+from typing import List
+from langchain_core import messages
+from pydantic import BaseModel, Field
 from dotenv import load_dotenv
+load_dotenv()
+
 from langchain_core.prompts import PromptTemplate
-from langchain_groq import ChatGroq
-from langchain_tavily import TavilySearch 
+from langchain_groq import ChatGroq 
 from langchain.agents import create_agent
 from langchain.tools import tool
 from langchain_core.messages import HumanMessage
+from langchain_core.messages import SystemMessage
 from langchain_tavily import TavilySearch
-load_dotenv()
+from langchain.agents.structured_output import ToolStrategy
 
-tavily = TavilySearch(max_results = 2)
+class Sources(BaseModel):
+    """Schema for answer used by agent"""
+    url: str = Field(description = "Source URL")
+class AgentResponse(BaseModel):
+    """Schema for answer used by agent"""
+    answer:     str = Field(description= "Plain text answer")
+    sources: list[Sources] = Field(default_factory=list, desciption = "Source URLs")    
 
-llm = ChatGroq(temperature = 0, model = "openai/gpt-oss-20b")
-tools = [tavily]
+
+llm = ChatGroq(temperature = 0, model = "openai/gpt-oss-120b")
+tools = [TavilySearch(max_results = 1)]
 agent = create_agent(llm, tools = tools)   
 
 def main():
     print("Hello from langchain-course!")
-    result = agent.invoke({"messages":[HumanMessage(content = "search for 3 job postings fro ai engineer using langchain in the bay area and list their details. Only search twice.")]})
-    print(result)
+    result = agent.invoke({"messages":[
+        HumanMessage(content = "search for 3 job postings fro ai engineer using langchain in the bay area and list their details. Only search twice.")]})
+    raw_answer = result["messages"][-1].content
+    print(raw_answer)
+    
+    structuring_llm = llm.with_structured_output(AgentResponse)
+    structured = structuring_llm.invoke(f"Convert this into required structure:\n\n{raw_answer}")
+    print(structured)
+    print(structured.answer)
+    print(structured.sources)
+
     # print(os.environ.get("OPENAI_API_KEY"))
 #     information = """
 #     Elon Reeve Musk (/ˈiːlɒn/ ⓘ EE-lon; born June 28, 1971) is a businessman and former public official who is the CEO and largest shareholder of Tesla and SpaceX. Musk has been the wealthiest person in the world since 2025, and became the first and only trillionaire in terms of US dollars in June 2026; as of July 8, 2026, Forbes estimates his net worth to be US$916 billion.
@@ -43,4 +64,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
