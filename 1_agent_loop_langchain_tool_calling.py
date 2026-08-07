@@ -7,7 +7,7 @@ from langchain.tools import tool
 from langchain.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
 
-MAX_TERATIONS = 10
+MAX_ITERATIONS = 10
 MODEL = "qwen3.5:72b"
 
 @tool
