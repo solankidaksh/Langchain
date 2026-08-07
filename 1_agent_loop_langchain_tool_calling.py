@@ -53,8 +53,8 @@ def run_agent(question :str):
                 "ask them which tier to use — do NOT assume one."
             )
         ), 
-        
-    ]
+        HumanMessage(content = question)
+    ] 
 
 
 if __name__ == "__main__":
