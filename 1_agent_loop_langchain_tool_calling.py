@@ -14,7 +14,7 @@ MODEL = "qwen3.5:72b"
 @tool
 def get_product_price(product :str) -> float:
     """Look up for the price of a product in a catalog"""
-    print(f" >>Executing get_product_rpice(product='{product}')")
+    print(f" >>Executing get_product_price(product='{product}')")
     price = {'laptop':1000, 'mouse': 500, 'keyboard': 700}
     return price.get(product, 0)
 
