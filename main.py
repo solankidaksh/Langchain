@@ -21,7 +21,6 @@ class AgentResponse(BaseModel):
     answer:     str = Field(description= "Plain text answer")
     sources: list[Sources] = Field(default_factory=list, desciption = "Source URLs")    
 
-
 llm = ChatGroq(temperature = 0, model = "openai/gpt-oss-120b")
 tools = [TavilySearch(max_results = 1)]
 agent = create_agent(llm, tools = tools)   
