@@ -8,8 +8,6 @@ from langchain.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
 from langchain_tavily import TavilySearch
 
-
-
 MAX_ITERATIONS = 10
 MODEL = "qwen3.5:72b"
 
