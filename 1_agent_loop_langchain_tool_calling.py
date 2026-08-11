@@ -60,6 +60,11 @@ def run_agent(question :str):
 
     for iteration in range(1, MAX_ITERATIONS + 1):
         print(f"\n---Iteration {iteration}---")
+        ai_message = llm_with_tools.invoke(messages)
+        tool_calls = ai_message.tool_calls
+        if not tool_calls:
+            print(f"final answer: {ai_message.content}")
+            return ai_message.content
 
 
 if __name__ == "__main__":
