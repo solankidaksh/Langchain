@@ -66,6 +66,15 @@ def run_agent(question :str):
             print(f"final answer: {ai_message.content}")
             return ai_message.content
 
+        #Process only one tool call -- force one tool per iteration
+        tool_call = tool_calls[0]
+        tool_name = tool_calls.get('name')
+        tool_args = tool_calls.get('args', {})
+        tool_id = tool_calls.get('id')
+
+        print(f"Tool Selected: {tool_name} with args: {tool_args}")
+        
+
 
 if __name__ == "__main__":
     print("Hello Langchain Agent (.binds_tools)!")
