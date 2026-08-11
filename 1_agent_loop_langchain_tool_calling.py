@@ -58,6 +58,9 @@ def run_agent(question :str):
         HumanMessage(content = question)
     ] 
 
+    for iteration in range(1, MAX_ITERATIONS + 1):
+        print(f"\n---Iteration {iteration}---")
+
 
 if __name__ == "__main__":
     print("Hello Langchain Agent (.binds_tools)!")
