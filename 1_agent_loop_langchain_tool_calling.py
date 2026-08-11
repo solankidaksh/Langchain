@@ -62,4 +62,5 @@ def run_agent(question :str):
 if __name__ == "__main__":
     print("Hello Langchain Agent (.binds_tools)!")
     print()
-    result = run_agent("What is the price of a laptop with a gold discount?")
+    result1 = run_agent("What is the price of a laptop with a gold discount?")
+    result2 = run_agent("What is the price of CPU with silver discount?")
