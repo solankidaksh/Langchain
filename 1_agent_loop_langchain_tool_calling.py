@@ -8,7 +8,7 @@ from langchain.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
 
 MAX_ITERATIONS = 10
-MODEL = "qwen3.5:72b"
+MODEL = "qwen3.5:2b"
 
 @tool
 def get_product_price(product :str) -> float:
@@ -30,7 +30,7 @@ def apply_discount(price :float, discount_tier :str) -> float:
 def run_agent(question :str):
     tools = [get_product_price, apply_discount]
     tool_dict = {t.name : t for t in tools}
-    llm = init_chat_model(f"Ollama:{MODEL}", temperature = 0)
+    llm = init_chat_model(MODEL, model_provider="ollama", temperature = 0)
     llm_with_tools = llm.bind_tools(tools)
     print(f"Question: {question}")
     print("="*60)
@@ -66,9 +66,9 @@ def run_agent(question :str):
 
         #Process only one tool call -- force one tool per iteration
         tool_call = tool_calls[0]
-        tool_name = tool_calls.get('name')
-        tool_args = tool_calls.get('args', {})
-        tool_id = tool_calls.get('id')
+        tool_name = tool_call.get('name')
+        tool_args = tool_call.get('args', {})
+        tool_id = tool_call.get('id')
 
         print(f"Tool Selected: {tool_name} with args: {tool_args}")
 
