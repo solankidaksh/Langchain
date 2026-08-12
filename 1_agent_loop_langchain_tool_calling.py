@@ -6,8 +6,6 @@ from langchain.chat_models import init_chat_model
 from langchain.tools import tool
 from langchain.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
-from langchain_tavily import TavilySearch
-from langchain.prompts import PromptTemplate
 
 MAX_ITERATIONS = 10
 MODEL = "qwen3.5:72b"
