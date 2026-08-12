@@ -8,7 +8,7 @@ from langchain.messages import HumanMessage, SystemMessage, ToolMessage
 from langsmith import traceable
 
 MAX_ITERATIONS = 10
-MODEL = "qwen3.5:2b"
+MODEL = "qwen2.5:1.5b"
 
 @tool
 def get_product_price(product :str) -> float:
