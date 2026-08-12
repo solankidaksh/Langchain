@@ -73,7 +73,13 @@ def run_agent(question :str):
         tool_id = tool_calls.get('id')
 
         print(f"Tool Selected: {tool_name} with args: {tool_args}")
-        
+
+        tool_to_use = tool_dict.get(tool_name)
+        if tool_to_use is None:
+            raise ValueError(f"Tool {tool_name} not found")
+        observation = tool_to_use.invoke(tool_args)
+        print(f"Tool Result: {observation}")
+
 
 
 if __name__ == "__main__":
