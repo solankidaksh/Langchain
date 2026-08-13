@@ -80,11 +80,10 @@ def run_agent(question :str):
 
         messages.append(ai_message)
         messages.append(
-            ToolMessage(content=str(observation), tool_cal_id = tool_id)
+            ToolMessage(content=str(observation), tool_call_id = tool_id)
         )
 
 if __name__ == "__main__":
     print("Hello Langchain Agent (.binds_tools)!")
     print()
     result1 = run_agent("What is the price of a laptop with a gold discount?")
-    result2 = run_agent("What is the price of CPU with silver discount?")
