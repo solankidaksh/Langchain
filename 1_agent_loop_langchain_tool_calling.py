@@ -79,7 +79,6 @@ def run_agent(question :str):
         print(f"Tool Result: {observation}")
 
 
-
 if __name__ == "__main__":
     print("Hello Langchain Agent (.binds_tools)!")
     print()
