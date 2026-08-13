@@ -12,7 +12,10 @@ MODEL = "gemma4:e2b"
 
 @tool
 def get_product_price(product :str) -> float:
-    """Look up for the price of a product in a catalog"""
+    """Look up for the price of a product in a catalog.
+    Valid product names: 'laptop', 'mouse', 'keyboard'.
+    Pass the generic product name exactly as listed, even if the user
+    doesn't specify a brand/model."""
     print(f" >>Executing get_product_price(product='{product}')")
     price = {'laptop':1000, 'mouse': 500, 'keyboard': 700}
     return price.get(product, 0)
