@@ -78,6 +78,10 @@ def run_agent(question :str):
         observation = tool_to_use.invoke(tool_args)
         print(f"Tool Result: {observation}")
 
+        messages.append(ai_message)
+        messages.append(
+            ToolMessage(content=str(observation), tool_cal_id = tool_id)
+        )
 
 if __name__ == "__main__":
     print("Hello Langchain Agent (.binds_tools)!")
