@@ -1,7 +1,9 @@
+from optparse import Option
 import re 
 import inspect
 
 from dotenv import load_dotenv
+from requests import options
 
 load_dotenv()
 
@@ -32,7 +34,7 @@ def apply_discount(price: float, discount_tier: str) -> float:
     discount = discount_percentages.get(discount_tier, 0)
     return round(price * (1 - discount / 100), 2)
 
-tool = {
+tools = {
     'get_product_price': get_product_price, 
     'apply_discount': apply_discount
 }
@@ -47,6 +49,9 @@ def get_tool_description(tool_dict):
         tool_docs = inspect.getdoc(original_function) or ""
         description.append(f"{tool_name}{signature} - {tool_docs}")
         return "\n".join(description)
+
+tool_description = get_tool_description(tools)
+tool_name = ','.join(tools.keys())
 
 # NOTE: Ollama can also auto-generate these schemas if you pass the functions
 # directly as tools (similar to LangChain's @tool decorator):
@@ -70,7 +75,7 @@ def get_tool_description(tool_dict):
 
 @traceable(name="Ollama Chat", run_type="llm")
 def ollama_chat_traced(messages):
-    return ollama.chat(model=MODEL, tools=tools_for_llm, messages=messages)
+    return ollama.chat(model=MODEL, messages=messages, options=options)
 
 # --- Agent Loop ---
 
