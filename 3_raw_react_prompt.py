@@ -52,6 +52,7 @@ def get_tool_description(tool_dict):
 
 tool_description = get_tool_description(tools)
 tool_name = ','.join(tools.keys())
+
 react_prompt = f"""
 STRICT RULES — you must follow these exactly:
 1. NEVER guess or assume any product price. You MUST call get_product_price first to get the real price.
@@ -80,7 +81,7 @@ Question: {{question}}
 Thought:"""
 
 @traceable(name="Ollama Chat", run_type="llm")
-def ollama_chat_traced(messages):
+def ollama_chat_traced(model, messages, options):
     return ollama.chat(model=MODEL, messages=messages, options=options)
 
 # --- Agent Loop ---
