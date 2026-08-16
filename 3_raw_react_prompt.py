@@ -89,37 +89,10 @@ def ollama_chat_traced(model, messages, options):
 
 @traceable(name="Ollama Agent Loop")
 def run_agent(question: str):
-    tools_dict = {
-        "get_product_price": get_product_price,
-        "apply_discount": apply_discount,
-    }
-
-
-
     print(f"Question: {question}")
     print("=" * 60)
 
-    messages = [
-        {
-            "role": "system",
-            "content": (
-                "You are a helpful shopping assistant. "
-                "You have access to a product catalog tool "
-                "and a discount tool.\n\n"
-                "STRICT RULES — you must follow these exactly:\n"
-                "1. NEVER guess or assume any product price. "
-                "You MUST call get_product_price first to get the real price.\n"
-                "2. Only call apply_discount AFTER you have received "
-                "a price from get_product_price. Pass the exact price "
-                "returned by get_product_price — do NOT pass a made-up number.\n"
-                "3. NEVER calculate discounts yourself using math. "
-                "Always use the apply_discount tool.\n"
-                "4. If the user does not specify a discount tier, "
-                "ask them which tier to use — do NOT assume one."
-            ),
-        },
-        {"role": "user", "content": question},
-    ]
+    
 
     for iteration in range(1, MAX_ITERATIONS + 1):
         print(f"\n--- Iteration {iteration} ---")
@@ -152,15 +125,6 @@ def run_agent(question: str):
 
 
         print(f"  [Tool Result] {observation}")
-
-        messages.append(ai_message)
-        messages.append(
-            {
-                "role": "tool",
-                "content": str(observation),
-            }
-        )
-
     print("ERROR: Max iterations reached without a final answer")
     return None
 
