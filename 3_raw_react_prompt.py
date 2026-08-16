@@ -52,26 +52,32 @@ def get_tool_description(tool_dict):
 
 tool_description = get_tool_description(tools)
 tool_name = ','.join(tools.keys())
+react_prompt = f"""
+STRICT RULES — you must follow these exactly:
+1. NEVER guess or assume any product price. You MUST call get_product_price first to get the real price.
+2. Only call apply_discount AFTER you have received a price from get_product_price. Pass the exact price returned by get_product_price — do NOT pass a made-up number.
+3. NEVER calculate discounts yourself using math. Always use the apply_discount tool.
+4. If the user does not specify a discount tier, ask them which tier to use — do NOT assume one.
 
-# NOTE: Ollama can also auto-generate these schemas if you pass the functions
-# directly as tools (similar to LangChain's @tool decorator):
-#   tools_for_llm = [get_product_price, apply_discount]
-# However, this requires your docstrings to follow the Google docstring format
-# so Ollama can parse parameter descriptions from the Args section. For example:
-#   def get_product_price(product: str) -> float:
-#       """Look up the price of a product in the catalog.
-#
-#       Args:
-#           product: The product name, e.g. 'laptop', 'headphones', 'keyboard'.
-#
-#       Returns:
-#           The price of the product, or 0 if not found.
-#       """
-# We keep the manual JSON version here so you can see what @tool hides from you.
+Answer the following questions as best you can. You have access to the following tools:
 
-# --- Helper: traced Ollama call ---
-# Difference 3: Without LangChain, we must manually trace LLM calls for LangSmith.
+{tool_description}
 
+Use the following format:
+
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action, as comma separated values
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+Begin!
+
+Question: {{question}}
+Thought:"""
 
 @traceable(name="Ollama Chat", run_type="llm")
 def ollama_chat_traced(messages):
