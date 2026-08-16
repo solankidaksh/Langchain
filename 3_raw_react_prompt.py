@@ -37,6 +37,17 @@ tool = {
     'apply_discount': apply_discount
 }
 
+# delte tool function, tool live inside the prompt as plain text
+def get_tool_description(tool_dict):
+    description = []
+    for tool_name, tool_function in tool_dict.items():
+        # __wrapped__ bypasses the decorator eg. @traceable
+        original_function = getattr(tool_function, '__wrapped__', tool_function)
+        signature = inspect.signature(original_function)
+        tool_docs = inspect.getdoc(original_function) or ""
+        description.append(f"{tool_name}{signature} - {tool_docs}")
+        return "\n".join(description)
+
 # NOTE: Ollama can also auto-generate these schemas if you pass the functions
 # directly as tools (similar to LangChain's @tool decorator):
 #   tools_for_llm = [get_product_price, apply_discount]
