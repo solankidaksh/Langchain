@@ -89,13 +89,11 @@ def ollama_chat_traced(model, messages, options):
 
 @traceable(name="Ollama Agent Loop")
 def run_agent(question: str):
+    print(f"Question: {question}")
+    print("=" * 60)    
 
     prompt = react_prompt.format(question=question)
     scratchpad = ""
-    print(f"Question: {question}")
-    print("=" * 60)
-
-    
 
     for iteration in range(1, MAX_ITERATIONS + 1):
         print(f"\n--- Iteration {iteration} ---")
