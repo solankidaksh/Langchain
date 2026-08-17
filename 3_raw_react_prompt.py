@@ -13,9 +13,7 @@ from langsmith import traceable
 MAX_ITERATIONS = 10
 MODEL = "qwen3:1.7b"
 
-
 # --- Tools (LangChain @tool decorator) ---
-
 
 @traceable(run_type="tool")
 def get_product_price(product: str) -> float:
@@ -59,13 +57,9 @@ STRICT RULES — you must follow these exactly:
 2. Only call apply_discount AFTER you have received a price from get_product_price. Pass the exact price returned by get_product_price — do NOT pass a made-up number.
 3. NEVER calculate discounts yourself using math. Always use the apply_discount tool.
 4. If the user does not specify a discount tier, ask them which tier to use — do NOT assume one.
-
 Answer the following questions as best you can. You have access to the following tools:
-
 {tool_description}
-
 Use the following format:
-
 Question: the input question you must answer
 Thought: you should always think about what to do
 Action: the action to take, should be one of [{tool_name}]
@@ -84,8 +78,8 @@ Thought:"""
 def ollama_chat_traced(model, messages, options):
     return ollama.chat(model=MODEL, messages=messages, options=options)
 
+    
 # --- Agent Loop ---
-
 
 @traceable(name="Ollama Agent Loop")
 def run_agent(question: str):
