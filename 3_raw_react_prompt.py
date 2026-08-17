@@ -104,8 +104,8 @@ def run_agent(question: str):
             messages = [{'role': 'user', 'content': full_prompt}], 
             options = {'stop': '\nobservation', 'temperature': 0} 
         )
-        
-        ai_message = response.message
+
+        output = response.message.content
 
         tool_calls = ai_message.tool_calls
 
