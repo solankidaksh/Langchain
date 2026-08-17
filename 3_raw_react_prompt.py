@@ -97,9 +97,14 @@ def run_agent(question: str):
 
     for iteration in range(1, MAX_ITERATIONS + 1):
         print(f"\n--- Iteration {iteration} ---")
+        full_prompt = prompt + scratchpad
 
-        # Difference 5: ollama.chat() directly instead of llm_with_tools.invoke()
-        response = ollama_chat_traced(messages=messages)
+        response = ollama_chat_traced(
+            model = MODEL,
+            messages = [{'role': 'user', 'content': full_prompt}], 
+            options = {'stop': '\nobservation', 'temperature': 0} 
+        )
+        
         ai_message = response.message
 
         tool_calls = ai_message.tool_calls
