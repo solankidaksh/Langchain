@@ -10,10 +10,12 @@ Answer: """)
 
 model = ChatOllama(model="gemma4:e2b ")
 chain = prompt | model
-response = prompt.invoke({
+response = chain.invoke({
     "context": f""" The most recent advancements in NLP are being driven by Large Language Models(LLMs). 
     These models outperform their smaller counterparts and hae become invaluable for developers who are creating 
     application with NLP capabilities. Developers can tap into these models through Hugging Face's transformers' library, or by utilizing
     OpenAI and Cohere's offerings through the 'openai' and 'cohere' libraries, respectively.""", 
     "question": "What model providers offer LLMs?"
 })
+
+print(response.content)
