@@ -8,10 +8,10 @@ Context: {context}
 Question: {question}
 Answer: """)
 
-model = ChatOllama(model="gemma4:e2b ")
+model = ChatOllama(model="gemma4:e2b")
 chain = prompt | model
 response = chain.invoke({
-    "context": f""" The most recent advancements in NLP are being driven by Large Language Models(LLMs). 
+    "context": """ The most recent advancements in NLP are being driven by Large Language Models(LLMs). 
     These models outperform their smaller counterparts and hae become invaluable for developers who are creating 
     application with NLP capabilities. Developers can tap into these models through Hugging Face's transformers' library, or by utilizing
     OpenAI and Cohere's offerings through the 'openai' and 'cohere' libraries, respectively.""", 
