@@ -3,7 +3,7 @@ from langchain_ollama import ChatOllama
 from urllib3 import response
 
 
-prompt = PromptTemplate.from_template(f"""Answer the question based on the context below. If the question cannot be answered using the information provided, answer with "I dont know"
+prompt = PromptTemplate.from_template("""Answer the question based on the context below. If the question cannot be answered using the information provided, answer with "I dont know"
 Context: {context}
 Question: {question}
 Answer: """)
