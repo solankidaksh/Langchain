@@ -1,4 +1,4 @@
-from langchain_core.prompts import PromptTemplate, prompt
+from langchain_core.prompts import PromptTemplate
 from langchain_ollama import ChatOllama
 from urllib3 import response
 
