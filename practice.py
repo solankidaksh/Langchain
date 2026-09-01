@@ -1,12 +1,13 @@
-from langchain_core.prompts import PromptTemplate
+from langchain_core.prompts import ChatPromptTemplate
 from langchain_ollama import ChatOllama
 from urllib3 import response
 
 
-prompt = PromptTemplate.from_template("""Answer the question based on the context below. If the question cannot be answered using the information provided, answer with "I dont know"
-Context: {context}
-Question: {question}
-Answer: """)
+prompt = ChatPromptTemplate.from_messages([
+    ('system', '''Answer the question based on the context below. If the question cannot be answered using the information provided, answer with "I dont know'''),
+    ('human', 'Context: {context}'),
+    ('human', 'Question: {question}'),
+])
 
 model = ChatOllama(model="gemma4:e2b")
 chain = prompt | model
