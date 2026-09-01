@@ -11,4 +11,6 @@ class AnswerWithJustification(BaseModel):
 llm = ChatOllama(model = 'gemma4:e2b')
 structured_llm = llm.with_structured_output(AnswerWithJustification)
 response = structured_llm.invoke('''What weighs more a pound of feathers or a pound of gold?''')
+batch = llm.batch(['Hi there!', 'My name is Daksh'])
 print(response)
+print(batch)
