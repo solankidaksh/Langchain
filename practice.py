@@ -5,6 +5,7 @@ from langchain_community.document_loaders import PyPDFLoader
 
 loader = PyPDFLoader("./practice.pdf")
 pages = loader.load()
+
 prompt = ChatPromptTemplate.from_messages([
     ('system', '''Answer the question based on the context below. If the question cannot be answered using the information provided, answer with "I dont know'''),
     ('human', 'Context: {context}'),
