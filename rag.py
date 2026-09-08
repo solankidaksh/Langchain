@@ -15,3 +15,4 @@ embedding_model = OpenAIEmbeddings(model = "text-embedding-3-small")
 embeddings = embedding_model.embed_documents(
     chunk.page_content for chunk in chunks
 )
+print(embeddings)
