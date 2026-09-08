@@ -7,6 +7,11 @@ doc = loader.load()
 
 splitter = RecursiveCharacterTextSplitter(
     chunk_size = 1000,
-    chunk_overlap = 200
+    chunk_overlap = 20
 )
-splitted_pages = splitter.split_documents(pages)
+chunks = splitter.split_documents(doc)
+
+embedding_model = OpenAIEmbeddings(model = "text-embedding-3-small")
+embeddings = embedding_model.embed_documents(
+    chunk.page_content for chunk in chunks
+)
