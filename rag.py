@@ -1,6 +1,6 @@
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_openai import OpenAIEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 
 loader = TextLoader("./test.txt")
 doc = loader.load()
@@ -11,7 +11,7 @@ splitter = RecursiveCharacterTextSplitter(
 )
 chunks = splitter.split_documents(doc)
 
-embedding_model = OpenAIEmbeddings(model = "text-embedding-3-small")
+embedding_model = HuggingFaceEmbeddings(model = "sentence-transformers/all-MiniLM-L6-v2")
 embeddings = embedding_model.embed_documents(
     chunk.page_content for chunk in chunks
 )
