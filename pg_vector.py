@@ -26,7 +26,7 @@ model = HuggingFaceEmbeddings(model = "sentence-transformers/all-MiniLM-L6-v2")
 
 db = PGVectorStore.from_documents(
     documents, model, engine=engine, table_name=table_name)
-results =db.similarity_search("what is captial of India?", k=4)
+results = db.similarity_search("what is captial of India?", k=4)
 print(results)
 
 print("Adding documents to the vectore store databse")
