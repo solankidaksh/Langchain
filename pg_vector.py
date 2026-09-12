@@ -37,4 +37,4 @@ db.add_documents([
         metadata = {"location": "New Delhi", "country": "India"}
     )
 ],ids=ids)
-print("Documents added. Document counts:", len(db.get_by_ids(ids))) 
+print("Documents added. Document counts:", len(db.get_by_ids(ids)))
