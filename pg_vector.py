@@ -1,11 +1,9 @@
 from langchain_community.document_loaders import TextLoader
-from langchain_postgres.vectorstores import PGVectorStore
+from langchain_postgres import PGVectorStore
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.documents import Document
 import uuid
-
-from rag import connection
 
 connnection = 'postgressql+psycopg://langchain:langchain@localhost:6024/langchain'
 
