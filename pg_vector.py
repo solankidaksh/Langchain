@@ -19,4 +19,15 @@ model = HuggingFaceEmbeddings(model = "sentence-transformers/all-MiniLM-L6-v2")
 
 db = PGVectorStore.from_documents(
     documents, model, connection=connection)
-db.similarity_search("what is captial of India?", k=4)
+results =db.similarity_search("what is captial of India?", k=4)
+print(results)
+
+print("Adding documents to the vectore store databse")
+ids = [str(uuid.uuid4()), str(uuid.uuid4())]
+db.add_documents([
+    Document(
+        page_content = "New Delhi is the capital of India",
+        metadata = {"location": "New Delhi", "country": "India"}
+    )
+],ids=ids)
+print("Documents added. Document counts:", len(db.get_by_ids(ids))) 
